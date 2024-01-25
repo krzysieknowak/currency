@@ -39,6 +39,7 @@ public class NbpServiceImpl implements CurrencyService{
 
     @Override
     public Rate getRateByCode(String code) {
+        if(exchangeRates == null) getExchangeRates();
         return exchangeRates.stream()
                 .filter(rate -> rate.getCode().equalsIgnoreCase(code))
                 .findFirst()
