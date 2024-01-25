@@ -33,4 +33,13 @@ public class NbpServiceImpl implements CurrencyService{
             return Collections.emptyList();
         }
     }
+
+    @Override
+    public Rate getRateByCode(String code) {
+        List<Rate> rates = getExchangeRates();
+        return rates.stream()
+                .filter(rate -> rate.getCode().equalsIgnoreCase(code))
+                .findFirst()
+                .orElseThrow();
+    }
 }

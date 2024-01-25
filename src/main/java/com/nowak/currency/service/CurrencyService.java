@@ -9,4 +9,6 @@ import java.util.List;
 
 public interface CurrencyService {
     public List<Rate> getExchangeRates();
+
+    Rate getRateByCode(String code);
 }
