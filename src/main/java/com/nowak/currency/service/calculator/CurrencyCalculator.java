@@ -23,14 +23,20 @@ public class CurrencyCalculator implements CurrencyCalculatorService {
         if(fromCurrency == null){
             return convertFromPlnToForeign(toCurrency,amount);
         }
+        if(toCurrency == null){
+            return convertFromForeignToPln(fromCurrency, amount);
+        }
         BigDecimal fromCurrencyMidValue = stringToBigDecimal(nbpService.getRateByCode(fromCurrency).getMid());
         BigDecimal toCurrencyMidValue = stringToBigDecimal(nbpService.getRateByCode(toCurrency).getMid());
         return amount.multiply(fromCurrencyMidValue).divide(toCurrencyMidValue,PRECISION,RoundingMode.HALF_UP);
     }
     private BigDecimal convertFromPlnToForeign(String toCurrency, BigDecimal amount){
-        List<Rate> rates = nbpService.getExchangeRates();
         BigDecimal toCurrencyMidValue = stringToBigDecimal(nbpService.getRateByCode(toCurrency).getMid());
         return amount.divide(toCurrencyMidValue,PRECISION,RoundingMode.HALF_UP);
+    }
+    private BigDecimal convertFromForeignToPln(String fromCurrency, BigDecimal amount){
+        BigDecimal fromCurrencyMidValue = stringToBigDecimal(nbpService.getRateByCode(fromCurrency).getMid());
+        return amount.multiply(fromCurrencyMidValue);
     }
 
     private BigDecimal stringToBigDecimal(String str){

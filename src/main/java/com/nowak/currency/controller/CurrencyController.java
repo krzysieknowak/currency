@@ -37,7 +37,7 @@ public class CurrencyController {
 
     @GetMapping("/convert")
     public BigDecimal convertCurrency(@RequestParam(required = false) String fromCurrency,
-                                      @RequestParam String toCurrency,
+                                      @RequestParam(required = false) String toCurrency,
                                       @RequestParam BigDecimal amount){
         return calculatorService.convert(fromCurrency,toCurrency, amount);
     }
