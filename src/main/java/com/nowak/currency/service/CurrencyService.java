@@ -8,5 +8,5 @@ import java.util.List;
 
 
 public interface CurrencyService {
-    public ExchangeRates getExchangeRates();
+    public List<Rate> getExchangeRates();
 }

@@ -23,15 +23,14 @@ public class NbpServiceImpl implements CurrencyService{
         this.restTemplate = restTemplate;
     }
 
-    public ExchangeRates getExchangeRates() {
+    public List<Rate> getExchangeRates() {
         ResponseEntity<ExchangeRates[]> responseEntity = restTemplate.getForEntity(NBP_URL, ExchangeRates[].class);
+        ExchangeRates[] exchangeRatesArray = responseEntity.getBody();
 
-        if (responseEntity.getStatusCode() == HttpStatus.OK) {
-            ExchangeRates[] exchangeRatesArray = responseEntity.getBody();
-            if (exchangeRatesArray != null && exchangeRatesArray.length > 0) {
-                return exchangeRatesArray[0];
-            }
+        if (exchangeRatesArray != null && exchangeRatesArray.length > 0) {
+            return exchangeRatesArray[0].getRates();
+        } else{
+            return Collections.emptyList();
         }
-        return new ExchangeRates();
     }
 }
