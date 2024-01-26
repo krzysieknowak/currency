@@ -10,10 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 
-@Service("currencyService")
+@Service
 public class NbpServiceImpl implements CurrencyService{
 
-    private static final String NBP_URL = "http://api.nbp.pl/api/exchangerates/tables/A/";
+    public static final String NBP_URL = "http://api.nbp.pl/api/exchangerates/tables/A/";
 
     private List<Rate> exchangeRates;
     private final RestTemplate restTemplate;

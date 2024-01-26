@@ -5,6 +5,7 @@ import com.nowak.currency.model.Rate;
 import com.nowak.currency.service.CurrencyService;
 import com.nowak.currency.service.NbpServiceImpl;
 import com.nowak.currency.service.calculator.CurrencyCalculatorService;
+import com.nowak.currency.service.calculator.SameCurrenciesException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,8 +18,8 @@ import java.util.List;
 @RequestMapping("/currency")
 public class CurrencyController {
 
-   private final CurrencyService currencyService;
-   private final CurrencyCalculatorService calculatorService;
+    private final CurrencyService currencyService;
+    private final CurrencyCalculatorService calculatorService;
 
     public CurrencyController(CurrencyService currencyService, CurrencyCalculatorService calculatorService) {
         this.currencyService = currencyService;
@@ -26,19 +27,19 @@ public class CurrencyController {
     }
 
     @GetMapping("/rates")
-    public List<Rate> getRates(){
+    public List<Rate> getRates() {
         return currencyService.getExchangeRates();
     }
 
     @GetMapping("/rates/{code}")
-    public Rate getRateByCode(@PathVariable String code){
+    public Rate getRateByCode(@PathVariable String code) {
         return currencyService.getRateByCode(code);
     }
 
     @GetMapping("/convert")
     public BigDecimal convertCurrency(@RequestParam(required = false) String fromCurrency,
                                       @RequestParam(required = false) String toCurrency,
-                                      @RequestParam BigDecimal amount){
-        return calculatorService.convert(fromCurrency,toCurrency, amount);
+                                      @RequestParam BigDecimal amount) throws SameCurrenciesException {
+        return calculatorService.convert(fromCurrency, toCurrency, amount);
     }
 }

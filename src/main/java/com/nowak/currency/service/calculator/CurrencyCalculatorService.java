@@ -6,5 +6,5 @@ import java.math.BigDecimal;
 @Service
 public interface CurrencyCalculatorService {
 
-    BigDecimal convert(String fromCurrency, String toCurrency, BigDecimal amount);
+    BigDecimal convert(String fromCurrency, String toCurrency, BigDecimal amount) throws SameCurrenciesException;
 }
